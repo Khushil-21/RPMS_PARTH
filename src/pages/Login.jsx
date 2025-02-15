@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Login() {
 	const navigate = useNavigate();
@@ -9,15 +10,32 @@ export default function Login() {
 		userType: "candidate", // default value
 	});
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		console.log("Login attempt with:", formData);
-		// Store user type in localStorage for persistence
-		localStorage.setItem("userType", formData.userType);
-		if (formData.userType === "candidate") {
-			navigate("/dashboard/jobs"); // Navigate to dashboard after login
-		} else {
-			navigate("/dashboard/recruitment-status"); // Navigate to dashboard after login
+
+		try {
+			const response = await axios({
+				method: 'POST',
+				url: 'https://localhost:7206/api/Auth/login',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				data: {
+					email: formData.email,
+					password: formData.password,
+					role_id: formData.userType === "admin" ? "admin" : "candidate",
+				},
+			});
+			sessionStorage.setItem("token",response.data);
+			sessionStorage.setItem("userType", formData.userType);
+			if (formData.userType === "admin") {
+				navigate("/dashboard/jobs"); // Navigate to dashboard after login
+			} else {
+				navigate("/dashboard/recruitment-status"); // Navigate to dashboard after login
+			}
+		} catch (error) {
+			console.error("Login failed:", error);
 		}
 	};
 
@@ -34,7 +52,7 @@ export default function Login() {
 			<div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-lg">
 				<div>
 					<h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-						Sign in to your account
+						Login to your account
 					</h2>
 				</div>
 				<form className="mt-8 space-y-6" onSubmit={handleSubmit}>
@@ -109,7 +127,7 @@ export default function Login() {
 							type="submit"
 							className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
 						>
-							Sign in
+							Login
 						</button>
 					</div>
 				</form>

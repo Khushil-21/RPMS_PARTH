@@ -1,43 +1,45 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
-const dummyJobs = [
-  {
-    id: 1,
-    title: "Senior React Developer",
-    company: "Tech Corp",
-    location: "Remote",
-    salary: "$120k - $150k",
-  },
-  {
-    id: 2,
-    title: "Full Stack Developer",
-    company: "StartUp Inc",
-    location: "New York",
-    salary: "$100k - $130k",
-  },
-  // Add more dummy jobs as needed
-];
+import axios from "axios";
 
 export default function Jobs() {
+  const [jobs, setJobs] = useState([]);
+  const [refresh, setRefresh] = useState(false);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await axios.get('https://localhost:7206/api/v1/jobCRUD/jobsWithRoleName');
+        setJobs(response.data);
+      } catch (error) {
+        console.error('Error fetching jobs:', error.response ? error.response.data : error.message);
+      }
+    };
+
+    fetchJobs();
+  }, [refresh]);
+
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">Available Jobs</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {dummyJobs.map((job) => (
+        {jobs.map((job) => (
           <Link
-            key={job.id}
-            to={`/dashboard/jobs/${job.id}`}
+            key={job.job_id}
+            to={`/dashboard/jobs/${job.job_id}`}
             className="block p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
           >
-            <h3 className="text-xl font-semibold text-gray-800">{job.title}</h3>
-            <p className="text-gray-600 mt-2">{job.company}</p>
-            <div className="mt-4 flex justify-between text-sm text-gray-500">
-              <span>{job.location}</span>
-              <span>{job.salary}</span>
+            <h3 className="text-xl font-semibold text-gray-800">{job.job_title}</h3>
+            <p className="text-gray-600 mt-2">{job.role_name}</p>
+            <div className="mt-4 text-sm text-gray-500">
+              <p><strong>Description:</strong> {job.job_description}</p>
+              <p><strong>Status:</strong> {job.status}</p>
+              <p><strong>Openings:</strong> {job.no_of_openings}</p>
+              <p><strong>Reason For Hold and Close:</strong> {job.reason_for_hold_close}</p>
             </div>
           </Link>
         ))}
       </div>
     </div>
   );
-} 
+}

@@ -8,10 +8,11 @@ import RecruitmentStatus from "../components/RecruitmentStatus";
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const userType = localStorage.getItem('userType') || 'candidate';
+  const userType = sessionStorage.getItem('userType') || 'candidate';
 
   const handleLogout = () => {
-    localStorage.removeItem('userType');
+    sessionStorage.removeItem('userType');
+    sessionStorage.removeItem('token');
     navigate("/login");
   };
 
@@ -26,12 +27,12 @@ export default function Dashboard() {
               <Route path="jobs/:id" element={<JobDetails />} />
               <Route path="candidates" element={<Candidates />} />
               <Route path="events" element={<Events />} />
-              <Route path="*" element={<Navigate to="jobs" replace />} />
+              {/* <Route path="*" element={<Navigate to="jobs" replace />} /> */}
             </>
           ) : (
             <>
               <Route path="recruitment-status" element={<RecruitmentStatus />} />
-              <Route path="*" element={<Navigate to="recruitment-status" replace />} />
+              {/* <Route path="*" element={<Navigate to="recruitment-status" replace />} /> */}
             </>
           )}
         </Routes>
