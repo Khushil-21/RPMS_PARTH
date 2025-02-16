@@ -255,7 +255,7 @@ export default function JobDetails() {
 									) : (
 										<button
 											onClick={handleSave}
-											className="flex items-center gap-2 px-4 py-2 bg-primary-600 text-white 
+											className="flex items-center text-nowrap gap-2 px-4 py-2 bg-primary-600 text-white 
 																 rounded-lg hover:bg-primary-700 transition-all duration-300"
 										>
 											<MdSave /> Save Changes
