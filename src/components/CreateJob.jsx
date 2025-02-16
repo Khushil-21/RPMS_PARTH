@@ -36,93 +36,110 @@ export default function CreateJob() {
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Create New Job</h1>
-      <form onSubmit={handleSubmit} className="max-w-2xl bg-white rounded-lg shadow-md p-6">
-        <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Job Title</label>
-            <input
-              type="text"
-              name="title"
-              value={jobData.title}
-              onChange={handleChange}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              required
-            />
-          </div>
-          
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Company</label>
-            <input
-              type="text"
-              name="company"
-              value={jobData.company}
-              onChange={handleChange}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-              required
-            />
-          </div>
+    <div className="p-6 max-w-4xl mx-auto">
+      <div className="bg-white rounded-xl shadow-lg p-8">
+        <h1 className="text-3xl font-bold text-gray-800 mb-8">Create New Job</h1>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">Job Title</label>
+              <input
+                type="text"
+                name="title"
+                value={jobData.title}
+                onChange={handleChange}
+                className="w-full px-4 py-2 rounded-lg border border-gray-300
+                         focus:ring-2 focus:ring-primary-500 focus:border-primary-500
+                         transition-all duration-300"
+                required
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">Company</label>
+              <input
+                type="text"
+                name="company"
+                value={jobData.company}
+                onChange={handleChange}
+                className="w-full px-4 py-2 rounded-lg border border-gray-300
+                         focus:ring-2 focus:ring-primary-500 focus:border-primary-500
+                         transition-all duration-300"
+                required
+              />
+            </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Location</label>
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">Location</label>
               <input
                 type="text"
                 name="location"
                 value={jobData.location}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300
+                         focus:ring-2 focus:ring-primary-500 focus:border-primary-500
+                         transition-all duration-300"
                 required
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Salary Range</label>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">Salary Range</label>
               <input
                 type="text"
                 name="salary"
                 value={jobData.salary}
                 onChange={handleChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                className="w-full px-4 py-2 rounded-lg border border-gray-300
+                         focus:ring-2 focus:ring-primary-500 focus:border-primary-500
+                         transition-all duration-300"
                 required
               />
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Description</label>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">Description</label>
             <textarea
               name="description"
               value={jobData.description}
               onChange={handleChange}
               rows={4}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300
+                       focus:ring-2 focus:ring-primary-500 focus:border-primary-500
+                       transition-all duration-300 resize-none"
               required
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Requirements</label>
+          <div className="space-y-2">
+            <label className="text-sm font-medium text-gray-700">Requirements</label>
             <textarea
               name="requirements"
               value={jobData.requirements}
               onChange={handleChange}
               rows={4}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+              className="w-full px-4 py-2 rounded-lg border border-gray-300
+                       focus:ring-2 focus:ring-primary-500 focus:border-primary-500
+                       transition-all duration-300 resize-none"
               required
             />
           </div>
-        </div>
 
-        <div className="mt-6">
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-          >
-            Create Job
-          </button>
-        </div>
-      </form>
+          <div className="pt-6">
+            <button
+              type="submit"
+              className="w-full bg-primary-600 text-white py-3 px-4 rounded-lg
+                       hover:bg-primary-700 focus:outline-none focus:ring-2
+                       focus:ring-primary-500 focus:ring-offset-2
+                       transition-all duration-300 hover:shadow-lg
+                       transform hover:-translate-y-0.5"
+            >
+              Create Job
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 } 
