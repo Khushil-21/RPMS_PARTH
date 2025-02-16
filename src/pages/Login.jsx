@@ -13,11 +13,12 @@ export default function Login() {
 		e.preventDefault();
 		console.log("Login attempt with:", formData);
 		// Store user type in localStorage for persistence
+		localStorage.clear();
 		localStorage.setItem("userType", formData.userType);
 		if (formData.userType === "candidate") {
-			navigate("/dashboard/jobs"); // Navigate to dashboard after login
-		} else {
 			navigate("/dashboard/recruitment-status"); // Navigate to dashboard after login
+		} else if (formData.userType === "admin") {
+			navigate("/dashboard/jobs"); // Navigate to dashboard after login
 		}
 	};
 
