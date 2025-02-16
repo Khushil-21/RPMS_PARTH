@@ -26,12 +26,12 @@ export default function Dashboard() {
               <Route path="jobs/:id" element={<JobDetails />} />
               <Route path="candidates" element={<Candidates />} />
               <Route path="events" element={<Events />} />
-              <Route path="*" element={<Navigate to="jobs" replace />} />
+              {/* <Route path="*" element={<Navigate to="jobs" replace />} /> */}
             </>
           ) : (
             <>
               <Route path="recruitment-status" element={<RecruitmentStatus />} />
-              <Route path="*" element={<Navigate to="recruitment-status" replace />} />
+              {/* <Route path="*" element={<Navigate to="recruitment-status" replace />} /> */}
             </>
           )}
         </Routes>

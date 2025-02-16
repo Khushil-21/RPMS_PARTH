@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export default function Login() {
 	const navigate = useNavigate();
@@ -12,14 +13,23 @@ export default function Login() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		console.log("Login attempt with:", formData);
-		// Store user type in localStorage for persistence
-		localStorage.clear();
-		localStorage.setItem("userType", formData.userType);
-		if (formData.userType === "candidate") {
-			navigate("/dashboard/recruitment-status"); // Navigate to dashboard after login
-		} else if (formData.userType === "admin") {
-			navigate("/dashboard/jobs"); // Navigate to dashboard after login
-		}
+		
+		// Simulate API call
+		setTimeout(() => {
+			localStorage.clear();
+			localStorage.setItem("userType", formData.userType);
+			
+			toast.success(`Welcome ${formData.email}!`, {
+				duration: 3000,
+				position: 'top-right',
+			});
+
+			if (formData.userType === "candidate") {
+				navigate("/dashboard/recruitment-status");
+			} else if (formData.userType === "admin") {
+				navigate("/dashboard/jobs");
+			}
+		}, 1000);
 	};
 
 	const handleChange = (e) => {
