@@ -8,7 +8,8 @@ import {
   MdLogout, 
   MdAssignment,
   MdAdd,
-  MdSchedule
+  MdSchedule,
+  MdAssessment
 } from "react-icons/md";
 
 export default function Sidebar({ userType, onLogout }) {
@@ -20,6 +21,7 @@ export default function Sidebar({ userType, onLogout }) {
     { path: "candidates", label: "Candidates", icon: <MdPeople className="w-6 h-6" /> },
     { path: "interviews", label: "Interviews", icon: <MdSchedule className="w-6 h-6" /> },
     { path: "events", label: "Events", icon: <MdEvent className="w-6 h-6" /> },
+    { path: "reports", label: "Generate Report", icon: <MdAssessment className="w-6 h-6" /> },
   ];
 
   const candidateMenuItems = [
