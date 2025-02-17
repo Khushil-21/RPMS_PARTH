@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { MdArrowBack, MdCheckCircle, MdCancel, MdSchedule, MdUpload } from "react-icons/md";
 import UploadCandidatesModal from "./UploadCandidatesModal";
+import Modal from "./Modal";
 
 const dummyCandidates = [
   {
     id: 1,
-    name: "John Doe",
+    name: "John Doe", 
     email: "john@example.com",
     experience: "5 years",
     appliedDate: "2024-03-15",
@@ -24,6 +25,27 @@ const dummyCandidates = [
 
 export default function CandidatesTable({ jobId, onBack }) {
   const [showUploadModal, setShowUploadModal] = useState(false);
+  const [showActionModal, setShowActionModal] = useState(false);
+  const [actionType, setActionType] = useState(null);
+  const [selectedCandidate, setSelectedCandidate] = useState(null);
+  const [actionComment, setActionComment] = useState("");
+
+  const handleAction = (candidate, type) => {
+    setSelectedCandidate(candidate);
+    setActionType(type);
+    setActionComment("");
+    setShowActionModal(true);
+  };
+
+  const handleSubmitAction = () => {
+    // Handle the action submission with the comment
+    console.log({
+      candidateId: selectedCandidate.id,
+      actionType,
+      comment: actionComment
+    });
+    setShowActionModal(false);
+  };
 
   return (
     <>
@@ -87,12 +109,14 @@ export default function CandidatesTable({ jobId, onBack }) {
                         <button
                           title="Accept"
                           className="p-1 text-green-600 hover:bg-green-50 rounded-full"
+                          onClick={() => handleAction(candidate, 'accept')}
                         >
                           <MdCheckCircle className="w-5 h-5" />
                         </button>
                         <button
                           title="Reject"
                           className="p-1 text-red-600 hover:bg-red-50 rounded-full"
+                          onClick={() => handleAction(candidate, 'reject')}
                         >
                           <MdCancel className="w-5 h-5" />
                         </button>
@@ -117,6 +141,43 @@ export default function CandidatesTable({ jobId, onBack }) {
         onClose={() => setShowUploadModal(false)}
         jobId={jobId}
       />
+
+      <Modal 
+        isOpen={showActionModal} 
+        onClose={() => setShowActionModal(false)}
+        title={actionType === 'accept' ? 'Accept Application' : 'Reject Application'}
+      >
+        <div className="space-y-4">
+          <p className="text-gray-600">
+            {selectedCandidate?.name} - {selectedCandidate?.email}
+          </p>
+          <textarea
+            className="w-full p-2 border border-gray-300 rounded-lg"
+            rows="4"
+            placeholder={`Enter your comments for ${actionType === 'accept' ? 'accepting' : 'rejecting'} this application`}
+            value={actionComment}
+            onChange={(e) => setActionComment(e.target.value)}
+          />
+          <div className="flex justify-end gap-3">
+            <button
+              className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+              onClick={() => setShowActionModal(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className={`px-4 py-2 text-white rounded-lg ${
+                actionType === 'accept' 
+                  ? 'bg-green-600 hover:bg-green-700'
+                  : 'bg-red-600 hover:bg-red-700'
+              }`}
+              onClick={handleSubmitAction}
+            >
+              Confirm
+            </button>
+          </div>
+        </div>
+      </Modal>
     </>
   );
-} 
+}
