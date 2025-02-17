@@ -23,12 +23,33 @@ const dummyCandidates = [
   // Add more dummy candidates
 ];
 
+const dummyRounds = [
+  { id: 1, name: "Technical Round 1" },
+  { id: 2, name: "Technical Round 2" },
+  { id: 3, name: "HR Round" }
+];
+
+const dummyInterviewers = [
+  { id: 1, name: "Alice Johnson" },
+  { id: 2, name: "Bob Wilson" },
+  { id: 3, name: "Carol Smith" }
+];
+
 export default function CandidatesTable({ jobId, onBack }) {
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [showActionModal, setShowActionModal] = useState(false);
+  const [showInterviewModal, setShowInterviewModal] = useState(false);
   const [actionType, setActionType] = useState(null);
   const [selectedCandidate, setSelectedCandidate] = useState(null);
   const [actionComment, setActionComment] = useState("");
+  const [interviewForm, setInterviewForm] = useState({
+    applicationId: "",
+    roundId: "",
+    scheduledAt: "",
+    interviewerId: "",
+    status: "",
+    link: ""
+  });
 
   const handleAction = (candidate, type) => {
     setSelectedCandidate(candidate);
@@ -45,6 +66,27 @@ export default function CandidatesTable({ jobId, onBack }) {
       comment: actionComment
     });
     setShowActionModal(false);
+  };
+
+  const handleScheduleInterview = (candidate) => {
+    setSelectedCandidate(candidate);
+    setInterviewForm({
+      ...interviewForm,
+      applicationId: candidate.id.toString()
+    });
+    setShowInterviewModal(true);
+  };
+
+  const handleInterviewFormChange = (e) => {
+    setInterviewForm({
+      ...interviewForm,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmitInterview = () => {
+    console.log("Interview scheduled:", interviewForm);
+    setShowInterviewModal(false);
   };
 
   return (
@@ -123,6 +165,7 @@ export default function CandidatesTable({ jobId, onBack }) {
                         <button
                           title="Schedule Interview"
                           className="p-1 text-primary-600 hover:bg-primary-50 rounded-full"
+                          onClick={() => handleScheduleInterview(candidate)}
                         >
                           <MdSchedule className="w-5 h-5" />
                         </button>
@@ -174,6 +217,127 @@ export default function CandidatesTable({ jobId, onBack }) {
               onClick={handleSubmitAction}
             >
               Confirm
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal
+        isOpen={showInterviewModal}
+        onClose={() => setShowInterviewModal(false)}
+        title="Schedule Interview"
+      >
+        <div className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Application ID
+            </label>
+            <select
+              name="applicationId"
+              value={interviewForm.applicationId}
+              onChange={handleInterviewFormChange}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            >
+              <option value="">Select Application</option>
+              {dummyCandidates.map(candidate => (
+                <option key={candidate.id} value={candidate.id}>
+                  {candidate.id} - {candidate.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Round
+            </label>
+            <select
+              name="roundId"
+              value={interviewForm.roundId}
+              onChange={handleInterviewFormChange}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            >
+              <option value="">Select Round</option>
+              {dummyRounds.map(round => (
+                <option key={round.id} value={round.id}>
+                  {round.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Scheduled At
+            </label>
+            <input
+              type="date"
+              name="scheduledAt"
+              value={interviewForm.scheduledAt}
+              onChange={handleInterviewFormChange}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Interviewer
+            </label>
+            <select
+              name="interviewerId"
+              value={interviewForm.interviewerId}
+              onChange={handleInterviewFormChange}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+            >
+              <option value="">Select Interviewer</option>
+              {dummyInterviewers.map(interviewer => (
+                <option key={interviewer.id} value={interviewer.id}>
+                  {interviewer.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Status
+            </label>
+            <input
+              type="text"
+              name="status"
+              value={interviewForm.status}
+              onChange={handleInterviewFormChange}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+              placeholder="Enter status"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              Meeting Link
+            </label>
+            <input
+              type="url"
+              name="link"
+              value={interviewForm.link}
+              onChange={handleInterviewFormChange}
+              className="w-full p-2 border border-gray-300 rounded-lg"
+              placeholder="Enter meeting link"
+            />
+          </div>
+
+          <div className="flex justify-end gap-3">
+            <button
+              className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+              onClick={() => setShowInterviewModal(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="px-4 py-2 text-white bg-primary-600 hover:bg-primary-700 rounded-lg"
+              onClick={handleSubmitInterview}
+            >
+              Assign Interview
             </button>
           </div>
         </div>
