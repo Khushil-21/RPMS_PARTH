@@ -1,4 +1,5 @@
-import { MdSchedule, MdEdit, MdVideoCall } from "react-icons/md";
+import { MdEdit, MdVideoCall } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const dummyInterviews = [
   {
@@ -34,6 +35,12 @@ const dummyInterviews = [
 ];
 
 export default function Interviews() {
+  const navigate = useNavigate();
+
+  const handleJoinMeeting = (interviewId) => {
+    navigate(`/dashboard/interviews/meeting/${interviewId}`);
+  };
+
   return (
     <div className="p-6">
       <div className="bg-white rounded-xl shadow-lg">
@@ -97,6 +104,7 @@ export default function Interviews() {
                         <button
                           title="Join Meeting"
                           className="p-1 text-green-600 hover:bg-green-50 rounded-full"
+                          onClick={() => handleJoinMeeting(interview.id)}
                         >
                           <MdVideoCall className="w-5 h-5" />
                         </button>

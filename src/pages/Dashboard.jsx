@@ -7,6 +7,7 @@ import JobDetails from "../components/JobDetails";
 import RecruitmentStatus from "../components/RecruitmentStatus";
 import CreateJob from "../components/CreateJob";
 import Interviews from "../components/Interviews";
+import InterviewMeeting from "../components/InterviewMeeting";
 import Reports from "../components/Reports";
 
 export default function Dashboard() {
@@ -30,6 +31,7 @@ export default function Dashboard() {
               <Route path="candidates" element={<Candidates />} />
               <Route path="events" element={<Events />} />
               <Route path="interviews" element={<Interviews />} />
+              <Route path="interviews/meeting/:id" element={<InterviewMeeting />} />
               <Route path="reports" element={<Reports />} />
               <Route path="create-job" element={<CreateJob />} />
               {/* <Route path="*" element={<Navigate to="jobs" replace />} /> */}
