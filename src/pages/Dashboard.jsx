@@ -20,30 +20,39 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <Sidebar userType={userType} onLogout={handleLogout} />
-      <div className="flex-1 overflow-auto">
-        <Routes>
-          {userType === 'admin' ? (
-            <>
-              <Route path="jobs" element={<Jobs />} />
-              <Route path="jobs/:id" element={<JobDetails />} />
-              <Route path="candidates" element={<Candidates />} />
-              <Route path="events" element={<Events />} />
-              <Route path="interviews" element={<Interviews />} />
-              <Route path="interviews/meeting/:id" element={<InterviewMeeting />} />
-              <Route path="reports" element={<Reports />} />
-              <Route path="create-job" element={<CreateJob />} />
-              {/* <Route path="*" element={<Navigate to="jobs" replace />} /> */}
-            </>
-          ) : (
-            <>
-              <Route path="recruitment-status" element={<RecruitmentStatus />} />
-              {/* <Route path="*" element={<Navigate to="recruitment-status" replace />} /> */}
-            </>
-          )}
-        </Routes>
-      </div>
-    </div>
+    <>
+      <Routes>
+        <Route path="interviews/meeting/:id" element={<InterviewMeeting />} />
+        <Route
+          path="*"
+          element={
+            <div className="flex h-screen bg-gray-100">
+              <Sidebar userType={userType} onLogout={handleLogout} />
+              <div className="flex-1 overflow-auto">
+                <Routes>
+                  {userType === 'admin' ? (
+                    <>
+                      <Route path="jobs" element={<Jobs />} />
+                      <Route path="jobs/:id" element={<JobDetails />} />
+                      <Route path="candidates" element={<Candidates />} />
+                      <Route path="events" element={<Events />} />
+                      <Route path="interviews" element={<Interviews />} />
+                      <Route path="reports" element={<Reports />} />
+                      <Route path="create-job" element={<CreateJob />} />
+                      {/* <Route path="*" element={<Navigate to="jobs" replace />} /> */}
+                    </>
+                  ) : (
+                    <>
+                      <Route path="recruitment-status" element={<RecruitmentStatus />} />
+                      {/* <Route path="*" element={<Navigate to="recruitment-status" replace />} /> */}
+                    </>
+                  )}
+                </Routes>
+              </div>
+            </div>
+          }
+        />
+      </Routes>
+    </>
   );
 } 
